@@ -7,9 +7,6 @@
     "serve": "vite preview"
   },
   "main": "./src/main.js",
-  "bin": {
-    "como": "./bin/cli.js"
-  },
   "dependencies": {
     "vue": "^3.2.16"
   },
