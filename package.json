@@ -17,5 +17,11 @@
   },
   "description": "Universal management template for front-end development.",
   "author": "como",
+  "keywords": [
+    "typescript",
+    "javascript",
+    "element-plus",
+    "management"
+  ],
   "license": "MIT"
 }
