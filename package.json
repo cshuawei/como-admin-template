@@ -8,6 +8,7 @@
   },
   "main": "./src/main.js",
   "dependencies": {
+    "element-plus": "^1.2.0-beta.3",
     "vue": "^3.2.16"
   },
   "devDependencies": {
