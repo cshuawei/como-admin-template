@@ -23,5 +23,9 @@
     "element-plus",
     "management"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cshuawei/vue-admin-template.git"
+  },
   "license": "MIT"
 }
