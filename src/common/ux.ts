@@ -9,9 +9,15 @@ import { Ux } from '~/common'
 
 const $ux = {
   message (type: 'success' | 'warning' | 'info' | 'error', message: Ux.Msg) {
-    ElMessage({
-      message,
-      type
+    return new Promise<void>(resolve => {
+      ElMessage({
+        message,
+        type,
+        duration: 3000
+      })
+      setTimeout(() => {
+        resolve()
+      }, 3000)
     })
   },
   loading (msg?: Ux.Msg, background?: string) {
