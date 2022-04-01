@@ -86,27 +86,27 @@ const $util = {
     return find?.label || '--'
   },
   /**
-    * 合并params，主要应用场景为搜索查询
-    * @param {Object} targetParams - 目标params，即最终和接口交互传入的params
-    * @param {Object} sourceParams - 需要合并的params，一般为搜索条件的params
-    * @param {Object} options - 用于配置目标params中不参与合并的属性
-    * @param {string[]} options.retainKeys - 用于配置目标params中不参与合并的属性
-    * @param {string[]} options.deleteKyes - 最终需要删除的多余属性
-    */
-  mergeParams<P> (
+   * 合并params，主要应用场景为搜索查询
+   * @param {Object} targetParams - 目标params，即最终和接口交互传入的params
+   * @param {Object} sourceParams - 需要合并的params，一般为搜索条件的params
+   * @param {Object} options - 用于配置目标params中不参与合并的属性
+   * @param {string[]} options.retainKeys - 用于配置目标params中不参与合并的属性
+   * @param {string[]} options.deleteKyes - 最终需要删除的多余属性
+   */
+  mergeParams<P extends Record<string, any>> (
     targetParams: P,
-    sourceParams: P,
+    sourceParams: Partial<P>,
     options?: Util.MergeParamsOptions<P>
   ) {
     const retainKeys = options?.retainKeys || ['current', 'size']
     const deleteKyes = options?.deleteKyes || []
     for (const key in sourceParams) {
-      targetParams[key] = sourceParams[key]
+      targetParams[key] = sourceParams[key]!
     }
     for (const key in targetParams) {
       if (!retainKeys.includes(key)) {
         typeof sourceParams[key] !== 'undefined'
-          ? (targetParams[key] = sourceParams[key])
+          ? (targetParams[key] = sourceParams[key]!)
           : delete targetParams[key]
       }
     }
@@ -124,6 +124,31 @@ const $util = {
     */
   capitalize (str: string) {
     return str.replace(/( |^)[a-z]/g, (l) => l.toUpperCase())
+  },
+  /**
+   * 计算某一个日期多少天之后(之前)的毫秒数
+   * @param {string} type - 表示计算之前还是之后 after|before
+   * @param {string|number|Date} date - 要计算的日期
+   * @param {number} days - 参与计算的天数
+   */
+  msDifference (
+    type: 'after' | 'before',
+    date: string | number | Date,
+    days: number
+  ) {
+    if (type === 'after') {
+      // 之后
+      const ms = +new Date(date)
+      const _ms = days * 24 * 60 * 60 * 1000
+      const myms = ms + _ms
+      return myms
+    } else if (type === 'before') {
+      // 之前
+      const ms = +new Date(date)
+      const _ms = days * 24 * 60 * 60 * 1000
+      const myms = ms - _ms
+      return myms
+    }
   },
   /**
     * 从多层级数组中找到目标ID所在的对象
